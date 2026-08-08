@@ -66,6 +66,7 @@
 
   <properties>
     <gpg.useagent>true</gpg.useagent>
+    <remote.resources.plugin.version>3.3.0</remote.resources.plugin.version>
   </properties>
 
   <build>
@@ -73,11 +74,38 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>${remote.resources.plugin.version}</version>
         <executions>
           <execution>
             <goals>
               <goal>bundle</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <projectsDirectory>src/it</projectsDirectory>
+          <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+          <postBuildHookScript>verify</postBuildHookScript>
+          <streamLogs>false</streamLogs>
+          <showErrors>true</showErrors>
+          <goals>
+            <goal>process-resources</goal>
+          </goals>
+          <filterProperties>
+            <remote.resources.plugin.version>${remote.resources.plugin.version}</remote.resources.plugin.version>
+          </filterProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>install</goal>
+              <goal>run</goal>
             </goals>
           </execution>
         </executions>
