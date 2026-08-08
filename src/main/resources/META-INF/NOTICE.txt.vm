@@ -16,12 +16,20 @@
 ## specific language governing permissions and limitations
 ## under the License.
 ##
-## $Id$
+## The copyright year range runs from the project inception year to the
+## dkpro.copyright.year property. Consuming projects are expected to set that
+## property - the DKPro parent POM does so for the projects inheriting from it.
+## When it is unset this degrades to the inception year alone rather than to the
+## current year, so that rebuilding a release tag always yields the same NOTICE.
 ##
+#set($copyrightYear = $project.properties['dkpro.copyright.year'])
+#if(!$copyrightYear)#set($copyrightYear = $project.inceptionYear)#end
 
 #if ($projectName)$projectName#else${project.name}#end
 
-Copyright ${project.inceptionYear}-${project.properties['dkpro.copyright.year']}#if($project.organization.name) $project.organization.name#end
+#if($copyrightYear)Copyright #if($project.inceptionYear && $copyrightYear != $project.inceptionYear)${project.inceptionYear}-#end${copyrightYear}#if($project.organization.name) $project.organization.name#end
+#elseif($project.organization.name)Copyright $project.organization.name
+#end
 
 #if($project.properties.postNoticeText)
 $project.properties.postNoticeText
