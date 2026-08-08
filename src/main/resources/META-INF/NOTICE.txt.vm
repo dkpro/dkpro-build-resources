@@ -21,7 +21,7 @@
 
 #if ($projectName)$projectName#else${project.name}#end
 
-Copyright ${projectTimespan}#if($project.organization.name) $project.organization.name#end
+Copyright ${project.inceptionYear}-${project.properties['dkpro.copyright.year']}#if($project.organization.name) $project.organization.name#end
 
 #if($project.properties.postNoticeText)
 $project.properties.postNoticeText
